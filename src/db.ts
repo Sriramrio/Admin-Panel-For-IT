@@ -27,6 +27,7 @@ export interface Projecttype{
     status:string,
     progress:number,
     deadline:string,
+    StartDate:Date,
 }
 const db=new Dexie("Employeloginedatabase") as Dexie &{
     employeeslogin:EntityTable<employeetype,'id'>
@@ -38,7 +39,7 @@ db.version(1).stores({
     employeeslogin:'++id,username,emailid,password',
     session:'++id,username,emailid',
     Employeesdata:'++id,EmployeeName,emailid,Role,status,empProject',
-    ProjectTable:'++id,Projecttitle,projectdescription,status, progress,deadline',
+    ProjectTable:'++id,Projecttitle,projectdescription,status, progress,deadline,startdate',
 })
 
 export {db}

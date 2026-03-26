@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import Register from "../../../Pages/Register";
 
 
 const initialState={

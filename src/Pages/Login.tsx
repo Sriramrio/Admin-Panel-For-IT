@@ -48,10 +48,11 @@
       <>
       <div className="flex  h-screen w-full bg-gray-200   ">
       <div className='hidden lg:block lg:basis-1/2 bg-muted'>
-        <img src='src\assets\images.png' className='h-full w-full '></img>
+        <img src="/images.png" className='h-full w-full '></img>
       </div>
       
         <div className='flex w-full  basis-full lg:basis-1/2 justify-center items-center px-4'>
+        <form autoComplete="off">
         <Card className="mx-auto min-w-sm lg:min-w-lg bg-white/50">
           <CardHeader className='flex flex-col items-center'>
             <CardTitle className="text-xl">Login</CardTitle>
@@ -95,7 +96,8 @@
             </div>
           </CardContent>
         </Card>
-        </div>
+        </form>
+      </div>
       </div>
       {/* <button onClick={deleterecod}>deleterecod</button> */}
       </>

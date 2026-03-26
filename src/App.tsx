@@ -33,13 +33,20 @@ import Login from './Pages/Login'
 import Register from './Pages/Register'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Dasboard from './AppComponents/Home/Dasboard'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+
 import AdminLayout from './AppComponents/Layout/AdminLayout'
 import Employees from './Pages/Employees'
 import Project from './Pages/Project'
 import Setting from './Pages/Setting'
-
+import { useEffect } from 'react'
 export default function App() {
+  useEffect(() => {
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log("App running in PWA mode");
+  } else {
+    console.log("App running in Browser");
+  }
+}, []);
   return (
     <BrowserRouter>
 

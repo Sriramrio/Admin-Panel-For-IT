@@ -90,7 +90,7 @@
       <>
       <div className="flex min-h-screen w-full bg-gray-200 ">
       <div className='hidden lg:block lg:basis-1/2 bg-muted'>
-        <img src='src\assets\images.png' className='h-full w-full '></img>
+        <img src='/images.png' className='h-full w-full '></img>
       </div>
       
         <div className='flex w-full basis-full lg:basis-1/2 justify-center items-center px-4'>

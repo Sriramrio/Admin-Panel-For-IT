@@ -8,6 +8,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../components/ui/tooltip"
+import { 
+  Home,
+  FolderKanban,   
+  Users,          
+  Settings,
+} from "lucide-react";
 const Sidbar = ({ isOpen }:any) => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   return (
@@ -16,7 +22,7 @@ const Sidbar = ({ isOpen }:any) => {
     <aside className={`h-full bg-gray-700 text-white flex flex-col transition-all duration-300  `}>
 
       <div className={`p-4 border-b border-slate-700 flex items-center ${isOpen ?'justify-start':'justify-center'} `}>
-       {isOpen ? <img src="/src/assets/atribs logo.svg" /> : <span className="text-white font-extrabold bg-red-600 px-1 rounded-2xl">AT</span>} 
+       {isOpen ? <img src="/atribs logo.svg" /> : <span className="text-white font-extrabold bg-red-600 px-1 rounded-2xl">AT</span>} 
       </div>
 
       <nav className={`flex flex-col gap-4  ${isOpen?'p-4':'p-2 '}`}>
@@ -25,7 +31,7 @@ const Sidbar = ({ isOpen }:any) => {
             <Link to="/admin" onClick={()=>setActiveTab("Dashboard")} className={`flex items-center gap-3 hover:bg-gray-600 p-2 rounded ${!isOpen && "justify-center"} ${ activeTab === "Dashboard"
                     ? "bg-indigo-600 text-white "
                     : ""}`}>
-              <i className="bi bi-house-lock-fill"></i>
+               <div className=""><Home size={20} /></div>
               {isOpen && <span>Dashboard</span>}
               </Link>     
           </TooltipTrigger>
@@ -40,11 +46,11 @@ const Sidbar = ({ isOpen }:any) => {
           <span>Dashboard</span></Link> */}
           <Tooltip>
             <TooltipTrigger asChild>
-                <Link to={'/admin/employees'} onClick={()=>setActiveTab("Employees")} className={`flex items-center gap-3 hover:bg-gray-600 p-2 rounded ${!isOpen && "justify-center"}
+                <Link to={'/admin/employees'} onClick={()=>setActiveTab("Employees")} className={`flex items-center gap-3 hover:bg-gray-600 p-2 rounded  ${!isOpen && "justify-center"}
                 ${ activeTab === "Employees"
                     ? "bg-indigo-600 text-white  shadow-indigo-100"
                     : ""}`}>
-                <i className="bi bi-people-fill"></i>
+                <div><Users size={20}  /></div>
 {isOpen && <span>Employees</span>}</Link>
           </TooltipTrigger>
           {!isOpen && (
@@ -59,7 +65,7 @@ const Sidbar = ({ isOpen }:any) => {
                  ${ activeTab === "Projects"
                     ? "bg-indigo-600 text-white  shadow-indigo-100"
                     : ""}`}>
-                 <i className="bi bi-kanban-fill"></i>
+                 <div><FolderKanban size={20} /></div>
             {isOpen && <span>Projects</span>}</Link>
           </TooltipTrigger>
           {!isOpen && (
@@ -76,7 +82,7 @@ const Sidbar = ({ isOpen }:any) => {
         ${ activeTab === "Settings"
                     ? "bg-indigo-600 text-white shadow-indigo-100"
                     : ""}`}>
-            <i className="bi bi-gear-wide-connected"></i>
+            <div><Settings size={20} /></div>
             {isOpen && <span>Settings</span>}
             {!isOpen && (
             <TooltipContent side="right">

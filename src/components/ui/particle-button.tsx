@@ -16,7 +16,7 @@ type ParticleButtonProps = React.PropsWithChildren<ButtonProps> & {
 function SuccessParticles({
   buttonRef,
 }: {
-  buttonRef: React.RefObject<HTMLButtonElement|null>;
+  buttonRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   const rect = buttonRef.current?.getBoundingClientRect();
   if (!rect) return null;
@@ -59,7 +59,7 @@ function ParticleButton({
   ...props
 }: ParticleButtonProps) {
   const [showParticles, setShowParticles] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement|null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setShowParticles(true);
@@ -72,6 +72,7 @@ function ParticleButton({
     // ✅ Optional success callback
     if (onSuccess) {
       onSuccess();
+      setShowParticles(false);
     }
 
     // ✅ Hide particles after duration
@@ -91,7 +92,7 @@ function ParticleButton({
           "relative flex items-center gap-2",
           showParticles && "scale-95",
           "transition-transform duration-100",
-          className
+          className,
         )}
         {...props}
       >

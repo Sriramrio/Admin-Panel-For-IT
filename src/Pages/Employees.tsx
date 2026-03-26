@@ -11,14 +11,16 @@ import { db, type employeetype, type Employessdatatype } from "../db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { ParticleButton } from "../components/ui/particle-button";
 import { DropdownMenu } from "../components/ui/dropdown-menu";
+import { Pencil,Trash,ArrowDownUp} from "lucide-react";
 
 import {
   Select,
   SelectContent,
-  SelectItem,
+  SelectItem, 
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { Search } from "lucide-react";
 
 const Employees = () => {
   const empdata = useLiveQuery(() => db.Employeesdata.toArray());
@@ -40,8 +42,9 @@ const Employees = () => {
   const [showdata, setShowdata] = useState("Card");
   const [showpopup, setShwpopup] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [empproject, setEmpproject] = useState("");
+  const [empproject, setEmpproject] = useState<string>("");
   const [filterproject, setFilterProject] = useState('All');
+  const [searchinput,setSearchinput]=useState<string>('');
   const emailRegex = /^[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+\.[a-zA-Z]{2,}$/;
   // async function deleterecod() {
   //   await db.Employeesdata  .bulkDelete([1,2,3,4,5,6,7,8,9]);
@@ -137,7 +140,11 @@ const Employees = () => {
       const statusmatch = Statusdata === "All" || emp.status === Statusdata;
       const rolematch = Rolefilter === "All" || emp.Role === Rolefilter;
       const Projectmatch= filterproject === "All" || emp.empProject === filterproject;
-      return statusmatch && rolematch && Projectmatch;
+      const searchmatch= emp.Emailid?.toLowerCase().includes(searchinput.toLowerCase())||
+       emp.Employeename?.toLowerCase().includes(searchinput.toLowerCase()) || emp.Role?.toLowerCase().includes(searchinput.toLowerCase())||
+       emp.empProject?.toLowerCase().includes(searchinput.toLowerCase()) 
+       
+      return statusmatch && rolematch && Projectmatch && searchmatch ;
     })
     .sort((a: any, b: any) => {
       if (!sortField) return 0;
@@ -197,8 +204,8 @@ const Employees = () => {
     <>
       <div className="max-w-7xl  mx-auto space-y-8 sm:px-4 md:px-6   ">
         {/* header  */}
-        <div className=" ">
-          <div className=" flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="">
+          <div className=" flex flex-col lg:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
               Employees
             </h1>
@@ -217,53 +224,66 @@ const Employees = () => {
         </div>
         {/* filter card */}
         <div className="bg-white p-4 sm:p-5  rounded-2xl border border-slate-100 shadow-sm flex flex-wrap gap-4 items-center justify-between ">
-          <div className="flex flex-col sm:flex-row sm:gap-4 gap-3">
-            <p className="flex items-center justify-between mb gap-2 text-sm font-bold text-slate-400 uppercase mr-2">
-              Filter By:
-            </p>
-            {/* Role Filter */}
-            <Select value={Rolefilter} onValueChange={setRolefilter}>
-              <SelectTrigger className="w-[180px] rounded-xl border-slate-200 focus:ring-indigo-500 text-sm font-bold text-slate-400">
-                <SelectValue placeholder="Role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Roles</SelectItem>
-                <SelectItem value="Developer">Developer</SelectItem>
-                <SelectItem value="Tester">Tester</SelectItem>
-                <SelectItem value="HR">HR</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="flex flex-row sm:flex-col sm:gap-4 gap-3">
+            <div className="flex flex-col lg:flex-row gap-3">
+                  <p className="flex items-center justify-between mb gap-2 text-sm font-bold text-slate-400 uppercase mr-2">
+                    Filter By:
+                  </p>
+                  {/* Role Filter */}
+                  <Select value={Rolefilter} onValueChange={setRolefilter}>
+                    <SelectTrigger className="w-[180px] rounded-xl border-slate-200 focus:ring-indigo-500 text-sm font-bold text-slate-400">
+                      <SelectValue placeholder="Role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="All">All Roles</SelectItem>
+                      <SelectItem value="Developer">Developer</SelectItem>
+                      <SelectItem value="Tester">Tester</SelectItem>
+                      <SelectItem value="HR">HR</SelectItem>
+                    </SelectContent>
+                  </Select>
 
-            {/* Status Filter */}
-            <Select value={Statusdata} onValueChange={setStatusdata}>
-              <SelectTrigger className="w-[180px] rounded-xl border-slate-200 focus:ring-indigo-500/20 text-sm font-bold text-slate-400">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="All">All Status</SelectItem>
-                <SelectItem value="Active">Active</SelectItem>
-                <SelectItem value="Leave">Leave</SelectItem>
-              </SelectContent>
-            </Select>
+                  {/* Status Filter */}
+                  <Select value={Statusdata} onValueChange={setStatusdata}>
+                    <SelectTrigger className="w-[180px] rounded-xl border-slate-200 focus:ring-indigo-500/20 text-sm font-bold text-slate-400">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="All">All Status</SelectItem>
+                      <SelectItem value="Active">Active</SelectItem>
+                      <SelectItem value="Leave">Leave</SelectItem>
+                    </SelectContent>
+                  </Select>
 
-            {/* project filter  */}
-            <Select value={filterproject} onValueChange={setFilterProject}>
-              <SelectTrigger className="w-[180px] rounded-xl border-slate-200 focus:ring-indigo-500/20 text-sm font-bold text-slate-400">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='All'>All Project</SelectItem>
-                {[...new Set(empdata?.map((item) => item.empProject))].map(
-                  (role) => (
-                    <SelectItem key={role} value={role}>
-                      {role}
-                    </SelectItem>
-                  ),
-                )}
-                {/* <SelectItem value="Active">Active</SelectItem>
-                        <SelectItem value="Leave">Leave</SelectItem> */}
-              </SelectContent>
-            </Select>
+                  {/* project filter  */}
+                  <Select value={filterproject} onValueChange={setFilterProject}>
+                    <SelectTrigger className="w-[180px] rounded-xl border-slate-200 focus:ring-indigo-500/20 text-sm font-bold text-slate-400">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value='All'>All Project</SelectItem>
+                      {[...new Set(empdata?.map((item) => item.empProject))].map(
+                        (role) => (
+                          <SelectItem key={role} value={role}>
+                            {role}
+                          </SelectItem>
+                        ),
+                      )}
+                      {/* <SelectItem value="Active">Active</SelectItem>
+                              <SelectItem value="Leave">Leave</SelectItem> */}
+                    </SelectContent>
+                  </Select>
+                  </div>
+              <div>
+                <div className="relative hidden md:block group">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                      <input 
+                        type="text" 
+                        placeholder="Search everything..." 
+                        value={searchinput}
+                        onChange={(e)=>setSearchinput(e.target.value)}
+                        className="bg-slate-50 border-transparent border-slate-200 focus:bg-white focus:border-indigo-500 rounded-xl pl-10 pr-4 py-2 w-64 lg:w-80 outline-none transition-all text-sm"/>
+                </div>
+            </div>
           </div>
 
           <div className="flex-col sm:flex  gap-4">
@@ -499,8 +519,8 @@ const Employees = () => {
                         onClick={() => handleSort("Employeename")}
                         className="cursor-pointer hover:text-indigo-600 transition-colors py-4 px-6"
                       >
-                        Employee{" "}
-                        <i className="bi bi-arrow-down-up font-bold "></i>
+                       <div className="flex items-center gap-1">Employee{" "}
+                        <ArrowDownUp size={15}/></div>
                       </TableHead>
                       <TableHead className="cursor-pointer hover:text-indigo-600 transition-colors py-4 px-6">
                         Role
@@ -509,7 +529,7 @@ const Employees = () => {
                         onClick={() => handleSort("Emailid")}
                         className="cursor-pointer hover:text-indigo-600 transition-colors py-4 px-6"
                       >
-                        Email <i className="bi bi-arrow-down-up font-bold "></i>
+                        <div  className="flex items-center gap-1">Email <ArrowDownUp size={15}/></div>
                       </TableHead>
                       <TableHead className="cursor-pointer hover:text-indigo-600 transition-colors py-4 px-6">
                         Status
@@ -554,7 +574,7 @@ const Employees = () => {
                             className="text-blue-500 hover:text-blue-700 border-2 rounded-md px-2 py-1"
                             onClick={() => handeleditshow(emp)}
                           >
-                            <i className="bi bi-pencil-square"></i>Edit
+                           <div className="flex items-center gap-1"><Pencil size={13}/>Edit</div> 
                           </button>
                           <button
                             className="text-red-500 hover:text-red-700 border-2 rounded-md px-2 py-1"
@@ -563,7 +583,7 @@ const Employees = () => {
                               setShwpopup(true);
                             }}
                           >
-                            <i className="bi bi-trash"></i>Delete
+                            <div className="flex gap-1 items-center"><Trash size={15}/>Delete</div>
                           </button>
                         </TableCell>
                       </TableRow>
@@ -669,7 +689,7 @@ const Employees = () => {
                           className="text-blue-500 hover:text-blue-700 border-2 rounded-md px-2 py-1"
                           onClick={() => handeleditshow(emp)}
                         >
-                          <i className="bi bi-pencil-square"></i>
+                          <Pencil size={16}/>
                         </button>
                       </div>
                       <div>
@@ -680,7 +700,7 @@ const Employees = () => {
                             setShwpopup(true);
                           }}
                         >
-                          <i className="bi bi-trash"></i>
+                          <Trash size={16}/>
                         </button>
                       </div>
                     </div>

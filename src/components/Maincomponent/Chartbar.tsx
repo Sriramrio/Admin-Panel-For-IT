@@ -24,7 +24,7 @@ const chartConfig = {
 
 const Chartbar = () => {
   return (
-    <Card className="w-140">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Revenue Comparison</CardTitle>
         <CardDescription>Monthly performance: 2024 vs 2025</CardDescription>

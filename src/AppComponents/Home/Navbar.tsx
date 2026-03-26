@@ -10,7 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../components/ui/tooltip";
-import { Search, Menu, Mail, LogOut, UserCircle } from "lucide-react"; // Using Lucide for a crisper look
+import { Search, Menu, Mail, LogOut, UserCircle } from "lucide-react";
 
 interface NavbarProps {
   onMenuClick: () => void;

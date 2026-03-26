@@ -46,7 +46,7 @@ const DropdownMenu = ({ options, children }: DropdownMenuProps) => {
             animate={{ y: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ y: -5, scale: 0.95, opacity: 0, filter: "blur(10px)" }}
             transition={{ duration: 0.6, ease: "circInOut", type: "spring" }}
-            className="absolute z-10 w-48 mt-2 p-1 bg-[#11111198] rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.2)] backdrop-blur-sm flex flex-col gap-2"
+            className="absolute z-10 w-25 mt-2 p-1 bg-[#11111198] rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.2)] backdrop-blur-sm flex flex-col gap-2"
           >
             {options && options.length > 0 ? (
               options.map((option, index) => (
@@ -85,7 +85,8 @@ const DropdownMenu = ({ options, children }: DropdownMenuProps) => {
                     },
                   }}
                   key={option.label}
-                  onClick={option.onClick}
+                  onClick={()=>{option.onClick();
+                    setIsOpen(false);}}
                   className="px-2 py-3 cursor-pointer text-white text-sm rounded-lg w-full text-left flex items-center gap-x-2"
                 >
                   {option.Icon}
