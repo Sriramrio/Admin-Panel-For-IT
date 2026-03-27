@@ -21,8 +21,8 @@ const Sidbar = ({ isOpen }:any) => {
     
     <aside className={`h-full bg-gray-700 text-white flex flex-col transition-all duration-300  `}>
 
-      <div className={`p-4 border-b border-slate-700 flex items-center ${isOpen ?'justify-start':'justify-center'} `}>
-       {isOpen ? <img src="/atribs logo.svg" /> : <span className="text-white font-extrabold bg-red-600 px-1 rounded-2xl">AT</span>} 
+      <div className={` border-b border-slate-700 flex items-center ${isOpen ?'justify-start p-4':'justify-center w-10   px-1 py-2 transition-all duration-300 '} `}>
+       {isOpen ? <img src="/atribs-logo.svg" /> :<div className=""><img src="/pwa-192x192.png"/> </div>}  {/*<span className="text-white font-extrabold bg-red-600 px-1 rounded-2xl">AT</span> */}
       </div>
 
       <nav className={`flex flex-col gap-4  ${isOpen?'p-4':'p-2 '}`}>

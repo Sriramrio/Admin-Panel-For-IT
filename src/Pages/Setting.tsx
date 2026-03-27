@@ -3,7 +3,7 @@
 // import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 // import { Field, FieldLabel } from "../components/ui/field";
 // import { Separator } from "../components/ui/separator"; // If you have a separator component
-import { User, Database, Trash, Pencil } from "lucide-react";
+import { User, Database, Trash, Pencil,Upload,Trash2,RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { Card } from "../components/ui/card";
 import { db } from "../db";
@@ -62,63 +62,71 @@ const Setting = () => {
           {/* main context */}
           <div className="flex-1">
             {session?.map((item) => (
-              <Card className="shadow-sm bg-white rounded-2xl basis-1/2 ml-9 mt-4">
+              <Card className="shadow-sm bg-white rounded-2xl basis-1/2 ml-9 ">
                 {activeTab === "general" && (
-                  <div className="mx-4 m-1">
-                    <div className="flex justify-between items-center mb-3 ">
+                  <div className="">
+                    <div className="flex justify-between items-center px-4  "style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #2d2d52 100%)" }} >
                       <div>
                         <img
                           src="/pwa-512x512.png"
                           className="rounded-full w-15"
                         />
+                        <p className="text-white text-xl font-semibold tracking-tight leading-snug uppercase mt-3">
+                          {item.username}
+                        </p>
+                        <p className="text-amber-400 text-[11px] uppercase tracking-widest font-normal mt-1 mb-5">
+                          Account Owner · Atribs
+                        </p>
                       </div>
-                      <div className="mt-3 flex gap-2 items-center">
-                       <Trash size={18} className="text-red-500 "/>
+                      <div className="mt-3 flex gap-2 items-center ">
+                       <button title="Delete account"
+                          className="w-9 h-9 rounded-xl border border-red-400 bg-white/5 text-red-400 hover:bg-red-500/50 flex items-center justify-center transition-all duration-150 cursor-pointer"
+                                     >
+                                       <Trash2 size={14} />
+                                     </button>
                         <div>
                           <label
-                            htmlFor="file-upload"
-                            className="border-2 border-gray-500 px-4 py-1.5 rounded-2xl cursor-pointer inline-flex items-center justify-center text-gray-700 hover:bg-gray-100 hover:border-gray-600 transition-colors duration-200 text-sm font-medium"
-                          >
-                            <i className="bi bi-upload pr-2"></i>Upload
-                          </label>
-                          <input
-                            id="file-upload"
-                            type="file"
-                            className="hidden"
-                          />
+                                          className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-white rounded-xl text-white text-xs font-medium bg-white/5 hover:bg-white/10 cursor-pointer transition-all duration-150"
+                                          title="Upload photo"
+                                        >
+                                          <Upload size={13} />
+                                          Upload
+                                          <input type="file" accept="image/*" className="hidden" />
+                                        </label>
                         </div>
                       </div>
                     </div>
                     <hr></hr>
+                    <div className="mx-4 m-1">
                     <div className="mt-3 flex justify-between  items-center mb-3">
                       <div className="flex flex-col  ">
-                        <span className="font-bold">Name</span>
+                        <span className="text-amber-400 text-[11px] uppercase tracking-widest font-normal mt-1 mb-2">Full Name</span>
 
-                        <span className=" font-semibold text-gray-500">
+                        <span className=" font-semibold text-gray-700 pl-2 capitalize">
                           {item.username}
                         </span>
                       </div>
                       <div>
                         <button className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
-                          <i className="bi bi-pencil-square mr-2"></i>
+                          <Pencil size={12} />
                           Edit
                         </button>
                       </div>
                     </div>
                     <hr></hr>
                     <div className=" mt-3 flex justify-between items-center mb-3">
-                      <div className="flex flex-col gap-2">
-                        <span className="font-bold">Contacts</span>
-                        <span className="font-semibold text-gray-500">
+                      <div className="flex flex-col gap-2 ">
+                        <span className="text-amber-400 text-[11px] uppercase tracking-widest font-normal ">Contacts</span>
+                        <span className="font-semibold text-gray-700 pl-2">
                           Email: {item.emailid}
                         </span>
-                        <span className="font-semibold text-gray-500">
+                        <span className="font-semibold text-gray-700 pl-2">
                           Phone:+91-636-73-987-23
                         </span>
                       </div>
                       <div>
                         <button className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
-                          <i className="bi bi-pencil-square mr-2"></i>
+                         <Pencil size={12}/>
                           Edit
                         </button>
                       </div>
@@ -126,14 +134,14 @@ const Setting = () => {
                     <hr></hr>
                     <div className=" mt-3 flex justify-between items-center mb-3">
                       <div className="flex flex-col gap-2">
-                        <span className="font-bold">Social Mesia</span>
-                        <span className="font-semibold text-gray-500">
+                        <span className="text-amber-400 text-[11px] uppercase tracking-widest font-normal ">Social Mesia</span>
+                        <span className="font-semibold text-gray-700 pl-2">
                           WebSite:{" "}
                           <a href="https://www.atribsglobal.com/">
                             Atribsglobal.com
                           </a>{" "}
                         </span>
-                        <span className="font-semibold text-gray-500">
+                        <span className="font-semibold text-gray-700 pl-2">
                           Linkedin:{" "}
                           <a href="https://www.linkedin.com/company/atribs/?originalSubdomain=in">
                             AtribsLinkedin
@@ -142,7 +150,7 @@ const Setting = () => {
                       </div>
                       <div>
                         <button className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
-                         <Pencil size={16}/>
+                         <Pencil size={12}/>
                           Edit
                         </button>
                       </div>
@@ -150,20 +158,25 @@ const Setting = () => {
                     <hr></hr>
                     <div className=" mt-3 flex justify-between items-center mb-3">
                       <div className="flex flex-col gap-2">
-                        <span className="font-bold">Language & Currency</span>
-                        <span className="font-semibold text-gray-500">
-                          English
-                        </span>
-                        <span className="font-semibold text-gray-500">INR</span>
+                        <span className="text-amber-400 text-[11px] uppercase tracking-widest font-normal">Language & Currency</span>
+                        <div className="flex gap-2 flex-wrap mt-1 pl-2">
+                          <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 text-xs font-medium px-3 py-1 rounded-full">
+                            🌐 English
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 text-xs font-medium px-3 py-1 rounded-full">
+                            ₹ INR
+                          </span>
+                        </div>
                       </div>
                       <div>
                         <button className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
-                          <i className="bi bi-pencil-square mr-2"></i>
+                          <Pencil size={12}/>
                           Edit
                         </button>
                       </div>
                     </div>
                   </div>
+                </div>
                 )}
                 {activeTab === "system" && (
                   <div className="m-3">
@@ -177,11 +190,12 @@ const Setting = () => {
                     </div>
                     <div className="mt-10">
                       <div className="m-6 flex justify-between items-center bg-amber-200/50 p-4 rounded-2xl">
-                        <div className="flex flex-col gap-1 ">
-                          <span className="font-bold text-amber-900/80">
+                        <div className="flex items-center gap-2 ">
+                          <div className="bg-gray-100 flex items-center justify-center w-9 h-9 rounded-xl"><RefreshCw size={16} className="text-amber-600 dark:text-amber-400" /></div>
+                          <div className="flex flex-col gap-1 "><span className="font-bold text-amber-900/80">
                             Clear Cache
                           </span>
-                          <span>This will clear temporary session data</span>
+                          <span>This will clear temporary session data</span></div>
                         </div>
                         <div>
                           <button
@@ -192,9 +206,27 @@ const Setting = () => {
                           </button>
                         </div>
                       </div>
+                          <div className="flex items-center justify-between gap-4 m-6 flex justify-between items-center bg-amber-200/50 p-4 rounded-2xl">
+                              <div className="flex items-start gap-3">
+                                <div className="w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center shrink-0">
+                                  <Database size={16} className="text-gray-500" />
+                                </div>
+                                <div>
+                                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                                    Export data
+                                  </p>
+                                  <p className="text-xs text-gray-500 mt-0.5">
+                                    Download a backup of all projects and employees.
+                                  </p>
+                                </div>
+                              </div>
+                              <button className="shrink-0 text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer">
+                                Export
+                              </button>
+                            </div>
                       <div className="m-6">
                         <span className="text-red-600 font-bold flex items-center">
-                          <Trash size={16}/>
+                          <Trash size={12}/>
                           Danger Zone
                         </span>
                         <div className="flex justify-between items-center bg-red-300/80 p-4 rounded-2xl">
@@ -231,7 +263,7 @@ const Setting = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 12c-.77 1.333.192 3 1.732 3z"
                   />
                 </svg>
               </div>

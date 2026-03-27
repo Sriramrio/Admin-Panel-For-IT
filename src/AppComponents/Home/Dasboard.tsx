@@ -7,6 +7,7 @@ import {
   ArrowUpRight, 
   Briefcase,
   TrendingUp,
+  LayoutGrid,
 } from "lucide-react";
 import {
   Table,
@@ -43,13 +44,14 @@ const Dasboard = () => {
         </header>
 
         {/* navcontent  */}
-        <div className='grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 '>
+        <div className='grid  grid-cols-1  md:grid-cols-3 lg:grid-cols-4 '>
           <div className='mt-6 p-3 bg-white w-50 rounded-xl'>
             <div className='flex justify-between  '>
               <span className='text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors italic'>Total Revenue</span>
               <span className='p-1 rounded-lg bg-gray-200   text-slate-600 '><CreditCard className="h-4 w-4" /></span>
             </div>
-            <div className='mt-6'>
+            
+            <div className='mt-6 '>
               <div className="text-2xl font-bold tracking-tighter">$45,231.89</div>
                   <div className="flex items-center mt-1 space-x-2">
                     <span className="text-xs font-bold flex items-center px-1.5 py-0.5 rounded
@@ -137,7 +139,7 @@ const Dasboard = () => {
           </div>
 
           <div className='bg-white mt-8 w-full rounded-2xl border border-gray-300'>
-            <div className='p-4'><span className='font-bold'>Project List </span></div>
+            <div className='p-4 flex gap-1'><LayoutGrid/><span className='font-bold'>Project List </span></div>
             <div>
               <div className=" max-w-full p-5 rounded-md ">
           <Table>

@@ -12,20 +12,20 @@ export default defineConfig({
       includeAssets: [
         'favicon.svg',
         'robots.txt',
-        'apple-touch-icon.png',
-        'pwa-192x192.png',
-        'pwa-512x512.png'
+        'images.png',
+        'atribs-logo.svg',
+        'apple-touch-icon.png'
       ],
       manifest: {
         name: 'Atribs Admin App',
         short_name: 'Admin',
         description: 'IT Admin Dashboard',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
-        display: 'fullscreen',
-        display_override: ["fullscreen", "standalone"],
+        theme_color: '#374151',
+        background_color: '#374151',
+        display: 'standalone',
         scope: '/',
         start_url: '/',
+        orientation: 'portrait',
         icons: [
           {
             src: '/pwa-192x192.png',
@@ -37,27 +37,22 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png'
           }
-        ]
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-        runtimeCaching: [
-          {
-            urlPattern: ({ request }) => request.destination === 'font',
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'fonts',
-            },
-          },
-          {
-            urlPattern: ({ request }) => request.destination === 'image',
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'images',
-            },
-          },
         ],
-      },
-    }),
-  ],
+        screenshots: [
+          {
+            src: '/screenshot-mobile.png',
+            sizes: '390x844',
+            type: 'image/png',
+            form_factor: 'narrow'
+          },
+          {
+            src: '/screenshot-desktop.png',
+            sizes: '1280x800',
+            type: 'image/png',
+            form_factor: 'wide'
+          }
+        ]
+      }
+    })
+  ]
 })

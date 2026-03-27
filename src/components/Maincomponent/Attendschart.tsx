@@ -9,6 +9,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { type ChartConfig } from "../../components/ui/chart";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../../db";
+import { ChartCandlestick } from 'lucide-react'
 
 export const Attendschart = () => {
   const Employeesdatadb = useLiveQuery(() => db.Employeesdata.toArray());
@@ -37,7 +38,7 @@ export const Attendschart = () => {
       <div className="bg-white w-full p-4 sm:p-6 rounded-2xl border border-gray-300">
         <div className="mb-4">
           <span className="font-semibold text-sm sm:text-base">
-            Employees Attendance Chart
+            <div className="flex gap-1.5 "><ChartCandlestick className="text-blue-500" /><p>Employees Attendance Chart</p></div>
           </span>
         </div>
 

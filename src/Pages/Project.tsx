@@ -27,9 +27,11 @@ import {
 // import { useDispatch } from 'react-redux'
 import { useLiveQuery } from "dexie-react-hooks";
 import { Avatar } from '../components/ui/avatar'
-import Showprojectemp from "../components/Maincomponent/Showprojectemp";
+import { User,LayoutGrid,Calendar,Ellipsis} from "lucide-react";
 export default function Projects() {
   const dbdata=useLiveQuery(()=>db.ProjectTable.toArray())
+const employeedb=useLiveQuery(()=>db.Employeesdata.toArray());
+console.log(employeedb)
   const [showForm, setShowForm] = useState(false);
   const [projecttitle,setProjecttitle]=useState<string>('');
   const [projectstatus,setProjectStatus]=useState<string>('');
@@ -40,6 +42,7 @@ export default function Projects() {
   const [showview,setShowview]=useState(false)
   const [selectedProject, setSelectedProject] = useState<any>(null);
 const [showProjectemp,setShowprojectemp]=useState(false)
+const [empnameproject,setEmpnameproject]=useState<string[]>([]);
   const [errors,setError]=useState({
     projecttitle:"",
     Workstatus:"",
@@ -129,6 +132,14 @@ useEffect(()=>{
   window.addEventListener('keydown',handelkeyDown);
   return ()=>window.removeEventListener('keydown',handelkeyDown)
 },[showForm])
+
+// filteer project emp
+
+function filteremp(titel:string) {
+    const empname=employeedb?.filter((item)=>item.empProject===titel).map((val)=>val.Employeename)??[]
+     console.log("Filtered Names:", empname);
+    setEmpnameproject(empname)
+}
 
   return (
    <>
@@ -268,9 +279,10 @@ useEffect(()=>{
         </div>
         </div>
     </div>
-    <div className="grid lg:grid-cols-3 gap-2 mt-5 ">
+{/*     <div className="grid items-center justify-center md:grid-cols-2 lg:grid-cols-3 gap-2  mt-4  "> */}
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 px-2">
       {dbdata?.map((item)=>(
-        <Card className="w-[300px] overflow-hidden hover:shadow-lg transition mb-4">
+        <Card className="w-[300px] p-0 overflow-hidden hover:shadow-lg transition mb-4">
 
           {/* Image */}
           <div className="relative  h-40 w-full ">
@@ -279,7 +291,7 @@ useEffect(()=>{
               // src={item.image}
               src="https://images.unsplash.com/photo-1540575467063-178a50c2df87"
               alt="project"
-              className="w-full h-full object-cover" />
+              className="w-full h-full object-cover rounded-t-xl " />
 
             <div className="absolute top-2 right-2">
               <Badge className={`bg-transparent/25 ${item.status === "Active" ? "text-blue-600" : item.status === "Completed" ? "text-green-400" : "text-orange-500"} border border-gray-50 px-4`}>
@@ -295,7 +307,7 @@ useEffect(()=>{
             <CardTitle className="text-lg  capitalize ">
               <div className="flex justify-between">
                 {item.Projecttitle}
-                <i className="bi bi-three-dots text-slate-500"></i>
+                <Ellipsis size={16} className=""/>
               </div>
             </CardTitle>
 
@@ -314,8 +326,11 @@ useEffect(()=>{
                 <div className="bg-blue-700/80 h-2 rounded " style={{ width: `${item.progress}%` }} />
               </div>
             </div>
-            <div className="mt-2">
-              <span className="border border-slate-500 rounded-xl hover:shadow-2xl bg-gray-100 shadow-gray-500 py-2 px-5 font-semibold text-slate-500"><i className="bi bi-calendar2-week pr-2 "></i> Due: {item.deadline}</span>
+            <div className="mt-2 flex">
+                <div className=" flex items-center gap-1 border border-slate-500 rounded-xl hover:shadow-2xl bg-gray-100 shadow-gray-500 py-2 px-5 font-semibold text-slate-500">
+                        <Calendar size={14} className="text-gray-400" />
+                          <span className="">  Due: {item.deadline}</span>
+                            </div>
             </div>
             <div className="flex flex-row items-center justify-center  w-45  mt-4">
               {/* <AnimatedTooltip items={people}  /> */}
@@ -335,6 +350,7 @@ useEffect(()=>{
           </CardFooter>
 
         </Card>
+
       ))}
     </div>
 
@@ -358,7 +374,7 @@ useEffect(()=>{
                 </div>
               </div>
               <button className="text-slate-400 hover:text-blue-600 hover:bg-blue-50 p-2 rounded-lg  ">
-                <i className="bi bi-three-dots text-xl"></i>
+                <Ellipsis size={16}/>
               </button>
             </div>
 
@@ -396,7 +412,7 @@ useEffect(()=>{
                     +2
                   </div>
                 </div> */}
-                <AvatarGroup className="grayscale" onClick={()=>{setShowprojectemp(true)}}>
+                <AvatarGroup className="grayscale" onClick={()=>{filteremp(selectedProject.projecttitle),setShowprojectemp(true)}}>
                     <Avatar>
                       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                       <AvatarFallback>CN</AvatarFallback>
@@ -419,9 +435,46 @@ useEffect(()=>{
             </div>
 
             <hr className="border-t border-slate-100 my-8" />
-{showProjectemp &&
-                <Showprojectemp/>
-                }
+                {showProjectemp &&
+                                <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4  ">
+                                    <div className="w-full max-w-2xl bg-slate-50 px-6 py-4 border-b border-slate-200 shadow-xl shadow-gray-400">
+                                    {/* header */}
+                                        <div className="flex justify-between items-center bg-slate-50 px-6 py-4 border-b border-slate-600 ">
+                                             
+                                            <div className="flex">
+                                                <div className=" flex justify-center items-center  w-10 h-10 rounded-xl bg-blue-200 mr-2"><LayoutGrid size={20} className="text-blue-600 dark:text-blue-400 " /></div>
+                                               <div> <p className=" text-xs font-semibold uppercase text-blue-600">Project Details</p>
+                                                <p className="text-xl font-bold text-slate-900 ">{selectedProject.Projecttitle}</p></div>
+                                            </div>
+                                            <div>
+                                                <button
+                                                onClick={()=>setShowprojectemp(false)} 
+                                                className="px-2 hover:bg-red-500 hover:text-white rounded-xl">
+                                                <span className="text-xl leading-none ">&times;</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div className=" mt-2">
+                                            <div className="flex flex-wrap gap-3">
+                                                {empnameproject.map((item, i) => (
+                                                <div 
+                                                    key={i} 
+                                                    className="group flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-full transition-all duration-200 hover:bg-blue-100 hover:border-blue-300 hover:shadow-sm cursor-default"
+                                                >
+                                                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-500 text-white group-hover:scale-110 transition-transform duration-200">
+                                                    <User size={14} strokeWidth={2.5} />
+                                                    </div>
+                                                    <span className="text-sm font-medium text-slate-700 capitalize leading-none">
+                                                    {item}
+                                                    </span> 
+                                                </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                }
             {/* Project Details Section */}
             <div className="text-slate-600 leading-relaxed">
               <h3 className="text-lg font-semibold text-slate-800 mb-3">Project Overview</h3>
@@ -433,7 +486,7 @@ useEffect(()=>{
             <div className="flex justify-end ">
                <button
                className="w-full sm:w-auto px-6 py-3 rounded-xl font-semibold text-white bg-red-400 cursor-pointer"
-                onClick={() => setShowview(false)}>
+                onClick={() =>{ setShowview(false),setShowprojectemp(false)}}>
                 Cancel </button>
             </div>
           </div>

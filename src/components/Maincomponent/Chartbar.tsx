@@ -2,6 +2,7 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../../components/ui/chart"
 // Sample IT Data: CPU usage across different servers
+import { ChartLine } from "lucide-react"
 const chartData = [
   { month: "Jan", revenue2024: 4000, revenue2025: 5200 },
   { month: "Feb", revenue2024: 5200, revenue2025: 5800 },
@@ -26,7 +27,7 @@ const Chartbar = () => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Revenue Comparison</CardTitle>
+        <CardTitle> <div className="flex gap-1"><ChartLine className="text-blue-500" />Revenue Comparison</div></CardTitle>
         <CardDescription>Monthly performance: 2024 vs 2025</CardDescription>
       </CardHeader>
       <CardContent>
